@@ -1,20 +1,17 @@
 ﻿using System.Collections.Generic;
-using ModestTree;
-using Providers.JumpableUnits;
-using Providers.MovableUnits;
+using Providers.UnitsByInterface;
 using Services;
-using Services.Input;
 using Zenject;
 
 namespace Controllers
 {
     public class JumpController : ITickable, IInitInStart
     {
-        private readonly IJumpableUnitsProvider _provider;
-        private  List<IJumpable> _jumpables = new List<IJumpable>();
+        private readonly IUnitsByBehaviorInterfaceProvider _provider;
+        private List<IJumpable> _jumpables = new List<IJumpable>();
 
 
-        public JumpController(IJumpableUnitsProvider provider)
+        public JumpController(IUnitsByBehaviorInterfaceProvider provider)
         {
             _provider = provider;
         }
@@ -28,17 +25,17 @@ namespace Controllers
         {
             foreach (var jumpable in _jumpables)
             {
-                if(jumpable.CanJump())
+                if (jumpable.CanJump())
                     jumpable.Jump();
             }
         }
-        
+
         private void GetJumpableUnits()
         {
-            _jumpables = _provider.GetJumpables();
-            if (_jumpables.IsEmpty())
+            _jumpables = _provider.GetUnitsByInterface<IJumpable>();
+            if (_jumpables == null)
             {
-                _provider.IHaveJumpables += GetJumpableUnits;
+                _provider.OnAllUnitsFound += GetJumpableUnits;
             }
         }
     }

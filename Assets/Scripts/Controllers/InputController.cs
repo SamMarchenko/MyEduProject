@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using ModestTree;
-using Providers.InputListenerUnits;
+using Providers.UnitsByInterface;
 using Services;
 using Services.Input;
 using Zenject;
@@ -10,10 +9,12 @@ namespace Controllers
     public class InputController : ITickable, IInitInStart
     {
         private List<IInputListener> _listeners = new List<IInputListener>();
-        private readonly IInputListenerUnitsProvider _provider;
+        private readonly IUnitsByBehaviorInterfaceProvider _provider;
         private readonly IInputService _inputService;
 
-        public InputController(IInputListenerUnitsProvider provider, IInputService inputService)
+        public InputController(
+            IUnitsByBehaviorInterfaceProvider provider,
+            IInputService inputService)
         {
             _provider = provider;
             _inputService = inputService;
@@ -26,6 +27,9 @@ namespace Controllers
 
         public void Tick()
         {
+            if (_listeners == null)
+                return;
+            
             foreach (var listener in _listeners)
             {
                 if (listener is IUnitControlInputListener l)
@@ -38,10 +42,10 @@ namespace Controllers
         
         private void GetInputListenersUnits()
         {
-            _listeners = _provider.GetInputListeners();
-            if (_listeners.IsEmpty())
+            _listeners = _provider.GetUnitsByInterface<IInputListener>();
+            if (_listeners == null)
             {
-                _provider.IHaveInputListeners += GetInputListenersUnits;
+                _provider.OnAllUnitsFound += GetInputListenersUnits;
             }
         }
     }

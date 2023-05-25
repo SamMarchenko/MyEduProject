@@ -6,7 +6,6 @@ namespace Providers.Enemies
 {
     public interface IEnemyProvider : IUnitsProvider<IEnemy>
     {
-       // void SetEnemiesSpawnPositions(SpawnPositions.SpawnEnemyType[] spawns);
-       event Action ICreateEnemies;
+        event Action ICreateEnemies;
     }
 }

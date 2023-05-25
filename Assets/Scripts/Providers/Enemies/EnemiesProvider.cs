@@ -6,7 +6,6 @@ using Factories.Enemies;
 using Levels;
 using ModestTree;
 using Services;
-using Services.Input;
 using Units.Enemies;
 using UnityEngine;
 
@@ -29,44 +28,29 @@ namespace Providers.Enemies
             _settingsPreset = settingsPreset;
         }
 
-        // public List<IEnemy> GetUnits()
+        public void Init()
+        {
+            SetEnemiesSpawnPositions(_coreLevelSettings.LevelView.SpawnPositions.EnemiesSpawnPos);
+            GetUnitsFromFactory();
+        }
 
-        // {
+        public bool TryGetUnits(out List<IEnemy> units)
+        {
+            if (_enemies.IsEmpty())
+            {
+                units = null;
+                return false;
+            }
 
-        //     if (!_enemies.IsEmpty())
 
-        //         return _enemies;
+            units = _enemies;
+            return true;
+        }
 
-        //     foreach (var enemyFactory in _enemyFactories)
-
-        //     {
-
-        //         if (enemyFactory is MovingEnemyFactory movingEnemyFactory)
-
-        //         {
-
-        //             _enemies.AddRange(movingEnemyFactory.CreateEnemies(_movingEnemiesSpawnPositions));
-
-        //             continue;
-
-        //         }
-
-        //
-
-        //         if (enemyFactory is JumpingEnemyFactory jumpingEnemyFactory)
-
-        //         {
-
-        //             _enemies.AddRange(jumpingEnemyFactory.CreateEnemies(_jumpingEnemiesSpawnPositions));
-
-        //         }
-
-        //     }
-
-        //     return _enemies;
-
-        // }
-
+        public void SetLevelSettings(CoreLevelSettings settings)
+        {
+            _coreLevelSettings = settings;
+        }
 
         private void SetEnemiesSpawnPositions(SpawnPositions.SpawnEnemyType[] spawns)
         {
@@ -83,17 +67,6 @@ namespace Providers.Enemies
                     _movingEnemiesSpawnPositions.Add(spawnEnemyType.SpawnPos.position);
                 }
             }
-        }
-
-        public void SetLevelSettings(CoreLevelSettings settings)
-        {
-            _coreLevelSettings = settings;
-        }
-
-        public void Init()
-        {
-            SetEnemiesSpawnPositions(_coreLevelSettings.LevelView.SpawnPositions.EnemiesSpawnPos);
-            GetUnitsFromFactory();
         }
 
         private void GetUnitsFromFactory()
@@ -113,19 +86,6 @@ namespace Providers.Enemies
             }
             
             ICreateEnemies?.Invoke();
-        }
-
-        public bool TryGetUnits(out List<IEnemy> units)
-        {
-            if (_enemies.IsEmpty())
-            {
-                units = null;
-                return false;
-            }
-
-
-            units = _enemies;
-            return true;
         }
     }
 }

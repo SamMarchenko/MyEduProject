@@ -1,4 +1,4 @@
-﻿namespace Services.Input
+﻿namespace Controllers
 {
     public interface IInputListener
     {

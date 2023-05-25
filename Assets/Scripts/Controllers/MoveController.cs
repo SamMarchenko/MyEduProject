@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
-using ModestTree;
-using Providers.MovableUnits;
+using Providers.UnitsByInterface;
 using Services;
-using Services.Input;
 using Zenject;
 
 namespace Controllers
 {
     public class MoveController : ITickable, IInitInStart
     {
-        private readonly IMovableUnitsProvider _provider;
+        private readonly IUnitsByBehaviorInterfaceProvider _provider;
 
         private List<IMovable> _movables = new List<IMovable>();
 
-        public MoveController(IMovableUnitsProvider provider)
+        public MoveController(
+            IUnitsByBehaviorInterfaceProvider provider)
         {
             _provider = provider;
         }
@@ -34,10 +33,10 @@ namespace Controllers
 
         private void GetMovablesUnits()
         {
-            _movables = _provider.GetMovables();
-            if (_movables.IsEmpty())
+            _movables = _provider.GetUnitsByInterface<IMovable>();
+            if (_movables == null)
             {
-                _provider.IHaveMovables += GetMovablesUnits;
+                _provider.OnAllUnitsFound += GetMovablesUnits;
             }
         }
     }
