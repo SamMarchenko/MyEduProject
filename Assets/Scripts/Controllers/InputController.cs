@@ -1,18 +1,27 @@
 ﻿using System.Collections.Generic;
+using ModestTree;
+using Providers.InputListenerUnits;
+using Services;
 using Services.Input;
 using Zenject;
 
 namespace Controllers
 {
-    public class InputController : ITickable
+    public class InputController : ITickable, IInitInStart
     {
-        private readonly List<IInputListener> _listeners;
+        private List<IInputListener> _listeners = new List<IInputListener>();
+        private readonly IInputListenerUnitsProvider _provider;
         private readonly IInputService _inputService;
 
-        public InputController(List<IInputListener> listeners, IInputService inputService)
+        public InputController(IInputListenerUnitsProvider provider, IInputService inputService)
         {
-            _listeners = listeners;
+            _provider = provider;
             _inputService = inputService;
+        }
+
+        public void Init()
+        {
+            GetInputListenersUnits();
         }
 
         public void Tick()
@@ -24,6 +33,15 @@ namespace Controllers
                     l.IsJumpButtonClicked = _inputService.IsJumpButtonClicked;
                     l.MoveDirection = _inputService.MoveDirectionPressed;
                 }
+            }
+        }
+        
+        private void GetInputListenersUnits()
+        {
+            _listeners = _provider.GetInputListeners();
+            if (_listeners.IsEmpty())
+            {
+                _provider.IHaveInputListeners += GetInputListenersUnits;
             }
         }
     }

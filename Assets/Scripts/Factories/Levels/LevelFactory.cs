@@ -1,26 +1,28 @@
 ﻿using Data;
-using Factories.Levels;
 using Levels;
+using Providers;
 using UnityEngine;
 
-public class LevelFactory : ILevelFactory
+namespace Factories.Levels
 {
-    private readonly CoreLevelSettingsPreset _settingsPreset;
-    private CoreLevel _currentLevel;
-
-    public LevelFactory(CoreLevelSettingsPreset settingsPreset)
+    public class LevelFactory : ILevelFactory, IUseLevelSettings
     {
-        _settingsPreset = settingsPreset;
-    }
+        private CoreLevel _currentLevel;
+        private CoreLevel _currentLevelPrefab;
 
-    public CoreLevel CreateLevel()
-    {
-        if (_currentLevel != null)
-            return _currentLevel;
+
+        public void SetLevelSettings(CoreLevelSettings settings)
+        {
+            _currentLevelPrefab = settings.LevelView;
+        }
+
+        public CoreLevel CreateLevel()
+        {
+            if (_currentLevel != null)
+                return _currentLevel;
         
-        //todo: захардкожено всегда грузить первый кор уровень
-        var level = _settingsPreset.LevelsSettings;
-        _currentLevel = Object.Instantiate(level[0].LevelView);
-        return _currentLevel;
+            _currentLevel = Object.Instantiate(_currentLevelPrefab);
+            return _currentLevel;
+        }
     }
 }

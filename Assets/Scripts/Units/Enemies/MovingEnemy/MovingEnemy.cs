@@ -6,10 +6,10 @@ namespace Units.Enemies.MovingEnemy
 {
     public class MovingEnemy : MonoBehaviour, IEnemy, IMovable
     {
-        public void Init(Vector3 position)
-        {
-        
-        }
+        // public void Init(Vector3 position)
+        // {
+        //
+        // }
 
         public bool CanMove()
         {

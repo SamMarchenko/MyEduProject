@@ -17,16 +17,18 @@ namespace Units.Player
         public bool IsJumpButtonClicked { get; set; }
         public float MoveDirection { get; set; }
 
-        public void Init(Vector3 position)
-        {
-            transform.position = position;
-        }
+        // public void Init(Vector3 position)
+        // {
+        //     transform.position = position;
+        // }
 
         public bool CanMove() => 
             !IsWallCollision(MoveDirection);
 
-        public void Move() => 
+        public void Move()
+        {
             _rigidbody.velocity = new Vector2(MoveDirection * _moveSpeed, _rigidbody.velocity.y);
+        }
 
         public bool CanJump() => 
             IsJumpButtonClicked && (IsGrounded() || jumpsCount < _maxJumps);

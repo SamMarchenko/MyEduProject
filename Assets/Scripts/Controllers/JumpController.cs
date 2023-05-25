@@ -1,16 +1,27 @@
 ﻿using System.Collections.Generic;
+using ModestTree;
+using Providers.JumpableUnits;
+using Providers.MovableUnits;
+using Services;
+using Services.Input;
 using Zenject;
 
 namespace Controllers
 {
-    public class JumpController : ITickable
+    public class JumpController : ITickable, IInitInStart
     {
-        private readonly List<IJumpable> _jumpables;
+        private readonly IJumpableUnitsProvider _provider;
+        private  List<IJumpable> _jumpables = new List<IJumpable>();
 
 
-        public JumpController(List<IJumpable> jumpables)
+        public JumpController(IJumpableUnitsProvider provider)
         {
-            _jumpables = jumpables;
+            _provider = provider;
+        }
+
+        public void Init()
+        {
+            GetJumpableUnits();
         }
 
         public void Tick()
@@ -19,6 +30,15 @@ namespace Controllers
             {
                 if(jumpable.CanJump())
                     jumpable.Jump();
+            }
+        }
+        
+        private void GetJumpableUnits()
+        {
+            _jumpables = _provider.GetJumpables();
+            if (_jumpables.IsEmpty())
+            {
+                _provider.IHaveJumpables += GetJumpableUnits;
             }
         }
     }

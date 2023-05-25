@@ -12,7 +12,7 @@ namespace Factories.Player
         {
             _playerPrefab = playerPrefab;
         }
-    
+
         public IPlayer CreatePlayer(Vector3 spawn)
         {
             var player = Object.Instantiate(_playerPrefab, spawn, Quaternion.identity);

@@ -1,14 +1,14 @@
 ﻿using Controllers;
 using UnityEngine;
 
-namespace Units.Enemies.MovingEnemy
+namespace Units.Enemies.JumpingEnemy
 {
     public class JumpingEnemy : MonoBehaviour, IEnemy, IJumpable
     {
-        public void Init(Vector3 position)
-        {
-        
-        }
+        // public void Init(Vector3 position)
+        // {
+        //
+        // }
 
         public bool CanJump()
         {
@@ -17,7 +17,7 @@ namespace Units.Enemies.MovingEnemy
 
         public void Jump()
         {
-       
+            Debug.Log("JumpingEnemy прыгает");
         }
     }
 }

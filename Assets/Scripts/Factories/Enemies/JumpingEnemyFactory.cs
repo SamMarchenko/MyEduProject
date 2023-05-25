@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Units.Enemies;
+using Units.Enemies.JumpingEnemy;
 using Units.Enemies.MovingEnemy;
 using UnityEngine;
 

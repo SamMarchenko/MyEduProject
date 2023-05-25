@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace Providers
 {
     public interface IUnitsProvider<T>
     {
-        List<T> GetUnits();
-        event Action<List<T>> IsHaveUnits;
+        bool TryGetUnits(out List<T> units);
     }
 }

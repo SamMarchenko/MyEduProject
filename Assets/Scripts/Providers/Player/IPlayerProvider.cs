@@ -1,4 +1,5 @@
-﻿using Units;
+﻿using System;
+using Units;
 using Units.Player;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace Providers.Player
 {
     public interface IPlayerProvider : IUnitsProvider<IPlayer>
     {
-        void SetPlayerSpawnPosition(Vector3 spawn);
+        //void SetPlayerSpawnPosition(Vector3 spawn);
+        event Action ICreatePlayer;
     }
 }

@@ -1,12 +1,18 @@
 ﻿using Controllers;
 using Factories.Enemies;
+using Factories.Levels;
 using Factories.Player;
 using Providers;
+using Providers.CoreLevels;
 using Providers.Enemies;
+using Providers.InputListenerUnits;
+using Providers.JumpableUnits;
+using Providers.MovableUnits;
 using Providers.Player;
 using Services;
 using Services.Input;
 using Units;
+using Units.Enemies.JumpingEnemy;
 using Units.Enemies.MovingEnemy;
 using Units.Player;
 using UnityEngine;
@@ -44,6 +50,9 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<PlayerProvider>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<EnemiesProvider>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<LevelProvider>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MovableUnitsProvider>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<JumpableUnitsProvider>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<InputListenerUnitsProvider>().AsSingle().NonLazy();
         }
 
         private void BindFactories()

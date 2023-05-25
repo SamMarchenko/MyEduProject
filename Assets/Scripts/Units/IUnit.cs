@@ -4,6 +4,6 @@ namespace Units
 {
     public interface IUnit
     {
-        void Init(Vector3 position);
+        //void Init(Vector3 position);
     }
 }

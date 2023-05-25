@@ -1,21 +1,31 @@
 ﻿using Factories.Levels;
 using Levels;
+using Services;
+using Services.Input;
 
-public class LevelProvider : ILevelProvider
+namespace Providers.CoreLevels
 {
-    private CoreLevel _currentLevel;
-    private readonly ILevelFactory _levelFactory;
-
-    public LevelProvider(ILevelFactory levelFactory)
+    public class LevelProvider : ILevelProvider, IInitInStart
     {
-        _levelFactory = levelFactory;
-    }
+        private CoreLevel _currentLevel;
+        private readonly ILevelFactory _levelFactory;
 
-    public CoreLevel GetLevel()
-    {
-        if (_currentLevel == null) 
-            _currentLevel = _levelFactory.CreateLevel();
+        public LevelProvider(ILevelFactory levelFactory)
+        {
+            _levelFactory = levelFactory;
+        }
 
-        return _currentLevel;
+        public CoreLevel GetLevel()
+        {
+            if (_currentLevel == null) 
+                _currentLevel = _levelFactory.CreateLevel();
+
+            return _currentLevel;
+        }
+
+        public void Init()
+        {
+            GetLevel();
+        }
     }
 }

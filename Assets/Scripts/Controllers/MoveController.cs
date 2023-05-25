@@ -1,22 +1,25 @@
 ﻿using System.Collections.Generic;
 using ModestTree;
-using Providers;
-using Providers.Enemies;
-using Providers.Player;
-using Units;
+using Providers.MovableUnits;
+using Services;
+using Services.Input;
 using Zenject;
 
 namespace Controllers
 {
-    public class MoveController : ITickable
+    public class MoveController : ITickable, IInitInStart
     {
-        private readonly List<IUnitsProvider<IUnit>> _providers = new List<IUnitsProvider<IUnit>>();
-        private readonly List<IMovable> _movables = new List<IMovable>();
+        private readonly IMovableUnitsProvider _provider;
 
-        public MoveController(IPlayerProvider playerProvider, IEnemyProvider enemyProvider)
+        private List<IMovable> _movables = new List<IMovable>();
+
+        public MoveController(IMovableUnitsProvider provider)
         {
-            _providers.Add(playerProvider);
-            _providers.Add(enemyProvider);
+            _provider = provider;
+        }
+
+        public void Init()
+        {
             GetMovablesUnits();
         }
 
@@ -31,34 +34,11 @@ namespace Controllers
 
         private void GetMovablesUnits()
         {
-            foreach (var provider in _providers)
+            _movables = _provider.GetMovables();
+            if (_movables.IsEmpty())
             {
-                var units = provider.GetUnits();
-                if (!units.IsEmpty())
-                {
-                    FindMovableUnits(units);
-                }
-                else
-                {
-                    provider.IsHaveUnits += ProviderOnIsHaveUnits;
-                }
+                _provider.IHaveMovables += GetMovablesUnits;
             }
-        }
-
-        private void FindMovableUnits(List<IUnit> units)
-        {
-            foreach (var unit in units)
-            {
-                if (unit is IMovable movable)
-                {
-                    _movables.Add(movable);
-                }
-            }
-        }
-
-        private void ProviderOnIsHaveUnits(List<IUnit> units)
-        {
-            FindMovableUnits(units);
         }
     }
 }

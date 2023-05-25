@@ -1,6 +1,9 @@
 ﻿using Levels;
 
-public interface ILevelProvider
+namespace Providers.CoreLevels
 {
-    public CoreLevel GetLevel();
+    public interface ILevelProvider
+    {
+        public CoreLevel GetLevel();
+    }
 }
