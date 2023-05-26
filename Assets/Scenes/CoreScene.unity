@@ -382,3 +382,4 @@ MonoBehaviour:
   _playerPrefab: {fileID: 2186961499387484542, guid: 5367ea3006695664cb463e9791d21833, type: 3}
   _movingEnemyPrefab: {fileID: 1816124166435983368, guid: d85c0eaca40442b46b5283dd51727dc6, type: 3}
   _jumpingEnemyPrefab: {fileID: 8257179940459336636, guid: e59f4c9f50d739a4dbf8ff702b6bda0a, type: 3}
+  _patrolEnemyPrefab: {fileID: 7300705884258396116, guid: 84c0be1295a3c1443924bdb068bdd24a, type: 3}

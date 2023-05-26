@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Data;
-using Factories;
 using Factories.Enemies;
 using Levels;
 using ModestTree;
@@ -13,7 +12,7 @@ namespace Providers.Enemies
 {
     public class EnemiesProvider : IEnemyProvider, IInitInStart, IUseLevelSettings
     {
-        private readonly List<IUnitsFactory<IEnemy>> _enemyFactories;
+        private readonly EnemiesFactory _enemiesFactory;
         private readonly CoreLevelSettingsPreset _settingsPreset;
         private List<IEnemy> _enemies = new List<IEnemy>();
         private List<Vector3> _jumpingEnemiesSpawnPositions = new List<Vector3>();
@@ -22,9 +21,9 @@ namespace Providers.Enemies
         public event Action ICreateEnemies;
 
 
-        public EnemiesProvider(List<IUnitsFactory<IEnemy>> enemyFactories, CoreLevelSettingsPreset settingsPreset)
+        public EnemiesProvider(EnemiesFactory enemiesFactory, CoreLevelSettingsPreset settingsPreset)
         {
-            _enemyFactories = enemyFactories;
+            _enemiesFactory = enemiesFactory;
             _settingsPreset = settingsPreset;
         }
 
@@ -71,20 +70,8 @@ namespace Providers.Enemies
 
         private void GetUnitsFromFactory()
         {
-            foreach (var enemyFactory in _enemyFactories)
-            {
-                if (enemyFactory is MovingEnemyFactory movingEnemyFactory)
-                {
-                    _enemies.AddRange(movingEnemyFactory.CreateEnemies(_movingEnemiesSpawnPositions));
-                    continue;
-                }
+            _enemies.AddRange(_enemiesFactory.CreateEnemies());
 
-                if (enemyFactory is JumpingEnemyFactory jumpingEnemyFactory)
-                {
-                    _enemies.AddRange(jumpingEnemyFactory.CreateEnemies(_jumpingEnemiesSpawnPositions));
-                }
-            }
-            
             ICreateEnemies?.Invoke();
         }
     }

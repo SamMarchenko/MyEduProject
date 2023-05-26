@@ -10,6 +10,7 @@ using Services;
 using Services.Input;
 using Units.Enemies.JumpingEnemy;
 using Units.Enemies.MovingEnemy;
+using Units.Enemies.PatrolEnemy;
 using Units.Player;
 using UnityEngine;
 using Zenject;
@@ -21,6 +22,7 @@ namespace Installers
         [SerializeField] private Player _playerPrefab;
         [SerializeField] private MovingEnemy _movingEnemyPrefab;
         [SerializeField] private JumpingEnemy _jumpingEnemyPrefab;
+        [SerializeField] private PatrolEnemy _patrolEnemyPrefab;
         
         public override void InstallBindings()
         {
@@ -59,8 +61,7 @@ namespace Installers
         private void BindFactories()
         {
             Container.BindInterfacesAndSelfTo<PlayerFactory>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<MovingEnemyFactory>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<JumpingEnemyFactory>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<EnemiesFactory>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<LevelFactory>().AsSingle().NonLazy();
         }
 
@@ -68,6 +69,7 @@ namespace Installers
         {
             Container.BindInterfacesAndSelfTo<MovingEnemy>().FromInstance(_movingEnemyPrefab);
             Container.BindInterfacesAndSelfTo<JumpingEnemy>().FromInstance(_jumpingEnemyPrefab);
+            Container.BindInterfacesAndSelfTo<PatrolEnemy>().FromInstance(_patrolEnemyPrefab);
         }
 
         private void BindPlayer()

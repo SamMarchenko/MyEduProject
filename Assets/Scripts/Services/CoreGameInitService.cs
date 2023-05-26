@@ -1,12 +1,6 @@
 ﻿using System.Collections.Generic;
 using Data;
-using Levels;
 using Providers;
-using Providers.Enemies;
-using Providers.Player;
-using Services.Input;
-using Units.Enemies;
-using Units.Player;
 using Zenject;
 
 namespace Services
