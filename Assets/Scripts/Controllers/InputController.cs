@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Controllers
 {
-    public class InputController : ITickable, IInitInStart
+    public class InputController : ITickable, IInitInStart, IBehaviourController
     {
         private List<IInputListener> _listeners = new List<IInputListener>();
         private readonly IUnitsByBehaviorInterfaceProvider _provider;
@@ -20,10 +20,8 @@ namespace Controllers
             _inputService = inputService;
         }
 
-        public void Init()
-        {
-            GetInputListenersUnits();
-        }
+        public void Init() => 
+            GetUnits();
 
         public void Tick()
         {
@@ -40,12 +38,13 @@ namespace Controllers
             }
         }
         
-        private void GetInputListenersUnits()
+
+        public void GetUnits()
         {
             _listeners = _provider.GetUnitsByInterface<IInputListener>();
             if (_listeners == null)
             {
-                _provider.OnAllUnitsFound += GetInputListenersUnits;
+                _provider.OnAllUnitsFound += GetUnits;
             }
         }
     }

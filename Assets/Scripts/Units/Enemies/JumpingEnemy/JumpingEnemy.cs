@@ -1,23 +1,27 @@
-﻿using Controllers;
+﻿using System;
+using Controllers;
 using UnityEngine;
 
 namespace Units.Enemies.JumpingEnemy
 {
     public class JumpingEnemy : MonoBehaviour, IEnemy, IJumpable
     {
-        // public void Init(Vector3 position)
-        // {
-        //
-        // }
+        [SerializeField] private Rigidbody2D _rigidbody;
+        [SerializeField] private Collider2D _enemyCollider;
+        [SerializeField] private float _jumpForce = 20f;
+        [SerializeField] private float _jumpCD = 2f;
+        
 
         public bool CanJump()
         {
-            return true;
+            _jumpCD -= Time.deltaTime;
+            return _jumpCD <= 0;
         }
 
         public void Jump()
         {
-            Debug.Log("JumpingEnemy прыгает");
+            _rigidbody.velocity = Vector2.up * _jumpForce;
+            _jumpCD = 2f;
         }
     }
 }

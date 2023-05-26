@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Controllers
 {
-    public class JumpController : ITickable, IInitInStart
+    public class JumpController : ITickable, IInitInStart, IBehaviourController
     {
         private readonly IUnitsByBehaviorInterfaceProvider _provider;
         private List<IJumpable> _jumpables = new List<IJumpable>();
@@ -18,24 +18,25 @@ namespace Controllers
 
         public void Init()
         {
-            GetJumpableUnits();
+            GetUnits();
         }
 
         public void Tick()
         {
             foreach (var jumpable in _jumpables)
             {
-                if (jumpable.CanJump())
+               if (jumpable.CanJump())
                     jumpable.Jump();
             }
         }
+        
 
-        private void GetJumpableUnits()
+        public void GetUnits()
         {
             _jumpables = _provider.GetUnitsByInterface<IJumpable>();
             if (_jumpables == null)
             {
-                _provider.OnAllUnitsFound += GetJumpableUnits;
+                _provider.OnAllUnitsFound += GetUnits;
             }
         }
     }

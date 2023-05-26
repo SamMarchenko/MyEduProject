@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Controllers
 {
-    public class MoveController : ITickable, IInitInStart
+    public class MoveController : ITickable, IInitInStart, IBehaviourController
     {
         private readonly IUnitsByBehaviorInterfaceProvider _provider;
 
@@ -19,7 +19,7 @@ namespace Controllers
 
         public void Init()
         {
-            GetMovablesUnits();
+            GetUnits();
         }
 
         public void Tick()
@@ -30,13 +30,14 @@ namespace Controllers
                     movable.Move();
             }
         }
+        
 
-        private void GetMovablesUnits()
+        public void GetUnits()
         {
             _movables = _provider.GetUnitsByInterface<IMovable>();
             if (_movables == null)
             {
-                _provider.OnAllUnitsFound += GetMovablesUnits;
+                _provider.OnAllUnitsFound += GetUnits;
             }
         }
     }

@@ -83,7 +83,9 @@
      <Compile Include="Assets\Scripts\Services\CoreGameInitService.cs" />
      <Compile Include="Assets\Scripts\Units\Enemies\PatrolEnemy\PatrolEnemy.cs" />
      <Compile Include="Assets\Scripts\Factories\Enemies\EnemiesFactory.cs" />
-     <Compile Include="Assets\Scripts\Controllers\IPatrolable.cs" />
+     <Compile Include="Assets\Scripts\Controllers\IPatrolling.cs" />
+     <Compile Include="Assets\Scripts\Controllers\IBehaviourController.cs" />
+     <Compile Include="Assets\Scripts\Controllers\PatrollController.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\Units\Enemies\JumpingEnemy" />
      <Folder Include="Assets\Scripts\Installers" />

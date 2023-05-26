@@ -75,6 +75,20 @@ namespace Providers.UnitsByInterface
 
                 return inputListeners;
             }
+            
+            if (typeof(T) == typeof(IPatrolling))
+            {
+                var patrollings = new List<T>();
+                foreach (var unit in _units)
+                {
+                    if (unit is IPatrolling patrolling)
+                    {
+                        patrollings.Add((T) patrolling);
+                    }
+                }
+
+                return patrollings;
+            }
 
             return null;
         }

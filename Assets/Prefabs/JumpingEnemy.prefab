@@ -178,3 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc19f8ab636462ea248c64719b8ee7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 8257179940459336579}
+  _enemyCollider: {fileID: 1236473311576607822}
+  _jumpForce: 20
+  _jumpCD: 2

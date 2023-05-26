@@ -1,5 +1,4 @@
 ﻿using Controllers;
-using Services.Input;
 using UnityEngine;
 
 namespace Units.Player
@@ -16,11 +15,7 @@ namespace Units.Player
 
         public bool IsJumpButtonClicked { get; set; }
         public float MoveDirection { get; set; }
-
-        // public void Init(Vector3 position)
-        // {
-        //     transform.position = position;
-        // }
+        
 
         public bool CanMove() => 
             !IsWallCollision(MoveDirection);

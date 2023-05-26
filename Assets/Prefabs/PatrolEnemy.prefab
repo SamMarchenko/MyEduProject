@@ -67,6 +67,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d9815b00124f9eb3bb88cdba327dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 597697784986521075}
+  _enemyCollider: {fileID: 7779056256867750462}
+  _moveSpeed: 1
+  _moveDirection: 1
+  _groundRayOffset: 0.2
+  _rayDistance: 1
 --- !u!1 &7300705884505674390
 GameObject:
   m_ObjectHideFlags: 0

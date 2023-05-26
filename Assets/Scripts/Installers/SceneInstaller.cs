@@ -47,6 +47,8 @@ namespace Installers
 
             Container.BindInterfacesAndSelfTo<MoveController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<JumpController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PatrollController>().AsSingle().NonLazy();
+            
         }
 
         private void BindProviders()
